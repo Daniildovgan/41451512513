@@ -1,0 +1,74 @@
+#include <iostream>
+
+void allocateArrays(int* arr, int size, int*& positiveArr, int& positiveSize,
+                    int*& negativeArr, int& negativeSize, int*& zeroArr, int& zeroSize) {
+    int positiveCount = 0, negativeCount = 0, zeroCount = 0;
+
+    for (int i = 0; i < size; ++i) {
+        if (arr[i] > 0)
+            positiveCount++;
+        else if (arr[i] < 0)
+            negativeCount++;
+        else
+            zeroCount++;
+    }
+
+    positiveArr = new int[positiveCount];
+    positiveSize = positiveCount;
+    int posIndex = 0;
+
+    negativeArr = new int[negativeCount];
+    negativeSize = negativeCount;
+    int negIndex = 0;
+
+    zeroArr = new int[zeroCount];
+    zeroSize = zeroCount;
+    int zeroIndex = 0;
+
+    for (int i = 0; i < size; ++i) {
+        if (arr[i] > 0)
+            positiveArr[posIndex++] = arr[i];
+        else if (arr[i] < 0)
+            negativeArr[negIndex++] = arr[i];
+        else
+            zeroArr[zeroIndex++] = arr[i];
+    }
+}
+
+int main() {
+    const int size = 10;
+    int arr[size] = {3, -5, 0, 7, -2, 0, 9, -4, 1, -6};
+
+    int* positiveArr = nullptr;
+    int positiveSize = 0;
+    int* negativeArr = nullptr;
+    int negativeSize = 0;
+    int* zeroArr = nullptr;
+    int zeroSize = 0;
+
+    allocateArrays(arr, size, positiveArr, positiveSize, negativeArr, negativeSize, zeroArr, zeroSize);
+
+    std::cout << "Positive elements: ";
+    for (int i = 0; i < positiveSize; ++i) {
+        std::cout << positiveArr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Negative elements: ";
+    for (int i = 0; i < negativeSize; ++i) {
+        std::cout << negativeArr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Zero elements: ";
+    for (int i = 0; i < zeroSize; ++i) {
+        std::cout << zeroArr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    delete[] positiveArr;
+    delete[] negativeArr;
+    delete[] zeroArr;
+
+    return 0;
+}
